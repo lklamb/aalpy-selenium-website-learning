@@ -1,0 +1,9 @@
+website_to_learn: RUNNING_EXAMPLE
+learning_type: PASSIVE
+system_source: FROM_BROWSER
+input_enabled_handling: SELF_LOOP
+trace_len: 3
+passive_approach: COMPATIBILITY_FUNC
+store_results: true
+logging_level: INFO
+create_pdfs: true
