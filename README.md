@@ -1,6 +1,6 @@
 # Master's Thesis: Automata Learning of Websites Using AALpy and Selenium
 
-This repository contains the code of the learning application described in the master's thesis "Automata Learning of Websites Using AALpy and Selenium", submitted by Lena Klambauer at Graz University of Technology in September 2025.
+This repository contains the code of the learning application described in the master's thesis "Automata Learning of Websites Using AALpy and Selenium", submitted by Lena Klambauer at Graz University of Technology in October 2025.
 
 The learning application can be executed with the provided example configuration file as follows:
 
