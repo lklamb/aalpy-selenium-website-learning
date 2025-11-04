@@ -10,6 +10,7 @@ from website_learning.Enums import InputEnabledHandling, PassiveApproach
 
 
 class PTAPreprocessor:
+    """Contains the preprocessing steps to be done on the PTA."""
     def __init__(self):
         return
 

@@ -11,6 +11,7 @@ from website_learning.Enums import ElementType, InteractionType
 
 
 class InputElement:
+    """Class representing a single interactive HTML element."""
     element_type_to_xpath = {
         ElementType.HREF: "//*[@href and not(self::link[contains(@rel, 'stylesheet')])]",
         ElementType.ONCLICK: "//*[@onclick]",
@@ -30,6 +31,7 @@ class InputElement:
     @property
     @abstractmethod
     def interaction_type(self):
+        """The interaction to be used on this InputElement."""
         pass
 
     def log_interaction_start(self):
@@ -38,6 +40,14 @@ class InputElement:
                          str(self.interaction_type.name))
 
     def get_html_reference(self, wi):
+        """
+        Getting a Selenium reference to the HTML element to be interacted with.
+        Args:
+          wi: Interactor to be used
+
+        Returns:
+            Selenium reference to HTML element
+        """
         html_references = wi.driver.find_elements(By.XPATH, self.element_type_to_xpath[self.element_type])
         html_reference = html_references[self.index]
         wi.driver.execute_script("arguments[0].removeAttribute('target');", html_reference)  # never open in new tab
@@ -46,16 +56,24 @@ class InputElement:
         return html_reference
 
     def get_letter_string(self):
+        """Convert InputElement information to a unique identifying string."""
         return (self.url + DELIMITER_FOR_LETTER + str(self.element_type.name) + DELIMITER_FOR_LETTER + str(
             self.index) + DELIMITER_FOR_LETTER + str(self.name) + DELIMITER_FOR_LETTER + str(
             self.interaction_type.name))
 
     @abstractmethod
     def interact(self, html_reference, wi):
+        """
+        Interact with an HTML element.
+        Args:
+          html_reference: Selenium reference to the element to be interacted with
+          wi: Interactor to be used
+        """
         pass
 
 
 class Clickable(InputElement):  # move to element, then click
+    """InputElement of a type that should be clicked."""
     def __init__(self, url: str, element_type: ElementType, index, name):
         assert element_type is ElementType.HREF or element_type is ElementType.ONCLICK or ElementType.ONCHANGE
         super().__init__(url, element_type, index, name)
@@ -80,6 +98,7 @@ class Clickable(InputElement):  # move to element, then click
 
 
 class ChangeableSelectOption(InputElement):
+    """InputElement that represents a single option in a Select element."""
     def __init__(self, url: str, element_type: ElementType, index, name, option_index, option_value):
         assert element_type is ElementType.ONCHANGE
         self.option_index = option_index
@@ -115,6 +134,7 @@ class ChangeableSelectOption(InputElement):
 
 
 class HoverStart(InputElement):
+    """InputElement of a type that the mouse can start a hover over."""
 
     def __init__(self, url: str, element_type: ElementType, index, name):
         assert element_type is ElementType.ONMOUSEOVER or element_type is ElementType.ONMOUSEENTER
@@ -136,6 +156,7 @@ class HoverStart(InputElement):
 
 
 class HoverEnd(InputElement):
+    """Input element of a type that the mouse can end a hover over."""
 
     def __init__(self, url: str, element_type: ElementType, index, name):
         assert element_type is ElementType.ONMOUSELEAVE or element_type is ElementType.ONMOUSEOUT
@@ -155,6 +176,16 @@ class HoverEnd(InputElement):
             Util.logger.debug("StaleElementReferenceException in interaction sequence")
 
     def is_mouse_hovering(self, html_reference, wi):
+        """
+        Check if the mouse is currently positioned over an element.
+
+        Args:
+          html_reference: Selenium reference to the HTML element to check
+          wi: Interactor to use
+
+        Returns:
+            True if the mouse is currently hovering over the HTML element, otherwise false.
+        """
         rect = wi.get_bounding_rect(html_reference)
         Util.logger.debug("bounding rect at hover check: ")
         Util.logger.debug(rect)

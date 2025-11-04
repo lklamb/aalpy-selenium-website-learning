@@ -5,6 +5,16 @@ from website_learning.Enums import EqOracleType
 
 
 def active_learning(sul):
+    """
+    Executes an active learning process on a website system.
+
+    Args:
+        sul: System Under Learning, the website to be learned
+
+    Returns:
+        learned_model: Mealy machine representation of the learned behaviour of the website
+        nr_transitions_without_selfloops: Total number of transitions present in the learned model excluding all self-loops
+    """
     # instantiate equivalence oracle
     eq_oracle = None
     match Settings.equivalence_oracle:

@@ -9,6 +9,7 @@ from website_learning.Constants import SEPARATOR_NEWLINE
 
 
 class GSMLogger(Instrumentation):
+    """Logging to be used in Generalized State Merging algorithm."""
     def __init__(self):
         super().__init__()
         self.log_merge_count = 0

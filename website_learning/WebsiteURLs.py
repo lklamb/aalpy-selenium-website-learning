@@ -1,14 +1,11 @@
 class WebsiteURLs:
+    """Class representing a Website SUL definition via its initial URL and URL scope.
+        initial_url: URL to starting point of learning algorithm
+        urls_in_scope: collection of URLs used to generate the input alphabet
+    """
 
     def __init__(self, initial_url: str, urls_in_scope: [str]):
-        # URL to starting point of learning algorithm
-        # recommended to use a specific html page (e.g. /index.html)
-        # if main website URL is used, it typically defaults to home page anyway,
-        # but might appear as two different states in learned automaton depending on the URL that is displayed
         self.initial_url = initial_url
-
-        # collection of URLs used to generate the input alphabet, initial URL is always in scope, will be deduplicated
-        # if webpages outside the scope are reached exploration will not continue from there
         self.urls_in_scope = urls_in_scope
         self.urls_in_scope.append(initial_url)
 

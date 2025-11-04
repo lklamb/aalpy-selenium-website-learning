@@ -7,6 +7,11 @@ from website_learning.replacement_strings import (replacement_input_strings,
 
 
 def cleanup_model(learned_model):
+    """
+    Replace strings in the learned modell for easier readability.
+    Args:
+      learned_model: The model to be cleaned up
+    """
     for state in learned_model.states:
         state.transitions = cleanup_input(state.transitions)
         state.output_fun = cleanup_input(state.output_fun)
@@ -14,6 +19,14 @@ def cleanup_model(learned_model):
 
 
 def cleanup_input(old_dict):
+    """
+    Clean up input strings in the model.
+    Args:
+      old_dict: Transitions to be cleaned up
+
+    Returns:
+        Transitions after cleanup
+    """
     new_dict = deepcopy(old_dict)
     for key in old_dict:
         for old_string in replacement_input_strings:
@@ -26,6 +39,14 @@ def cleanup_input(old_dict):
 
 
 def cleanup_output(old_dict):
+    """
+    Clean up output strings in the model.
+    Args:
+      old_dict: Transitions to be cleaned up
+
+    Returns:
+        Transitions after cleanup
+    """
     new_dict = deepcopy(old_dict)
     for key in new_dict:
         for old_string in replacement_output_strings:
@@ -36,6 +57,16 @@ def cleanup_output(old_dict):
 
 
 def save_model_without_selfloops(dot_with_selfloops, dest_file_path):
+    """
+    Save model excluding self-loops in a separate file.
+
+    Args:
+      dot_with_selfloops: .dot file containing original model
+      dest_file_path: where to save the cleaned up model
+
+    Returns:
+        Total number of transitions excluding self-loops
+    """
     # remove self loops
     nr_transitions_without_selfloops = 0
     dot_with_selfloops_path = dot_with_selfloops.with_suffix(".dot")

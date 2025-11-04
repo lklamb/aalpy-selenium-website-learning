@@ -19,6 +19,7 @@ from website_learning.Interactor import Interactor
 
 
 class WebsiteInteractor(Interactor):
+    """Contains interactions with a website system that can be accessed via a browser."""
 
     def __init__(self):
         super().__init__()
@@ -27,6 +28,7 @@ class WebsiteInteractor(Interactor):
         self.driver = None
 
     def analysis_phase(self):
+        """Analyze the website system."""
         options = Options()
         prefs = {
             "profile.managed_default_content_settings.javascript": 2  # 2 means block
@@ -76,6 +78,7 @@ class WebsiteInteractor(Interactor):
         self.driver.implicitly_wait(Settings.wait_time)
 
     def preprocess_urls(self):
+        """Preprocess user-defined URLs to make them consistent inside the learning application."""
         self.reset_system(Settings.website_to_learn.initial_url)
         Util.initial_url = Util.make_url_safe_for_display(self.driver.current_url)
         urls_without_duplicates = list(dict.fromkeys(Settings.website_to_learn.urls_in_scope))  # from Raymond Hettinger, https://twitter.com/raymondh/status/944125570534621185
@@ -85,6 +88,7 @@ class WebsiteInteractor(Interactor):
         Util.write_scope_to_file()
 
     def generate_input_alphabet(self):
+        """Generate the input alphabet from the website system."""
         for url in Util.urls_in_scope:
             self.reset_system(url)
             nr_interactive_elements = 0
@@ -105,6 +109,16 @@ class WebsiteInteractor(Interactor):
         Util.write_input_alphabet_to_file()
 
     def find_interactive_elements(self, url, element_type):
+        """
+        Find interactive HTML elements on a webpage.
+
+        Args:
+          url: Webpage to be analyzed
+          element_type: Which elements to look for
+
+        Returns:
+            The number of elements that were found
+        """
         html_references = self.driver.find_elements(By.XPATH, InputElement.element_type_to_xpath[element_type])
         nr_elements = 0
         for index, html_reference in enumerate(html_references):
@@ -152,6 +166,11 @@ class WebsiteInteractor(Interactor):
         return nr_elements
 
     def reset_system(self, url_to_load=None):
+        """
+        Reset the system to its initial state.
+        Args:
+          url_to_load:  URL to the webpage to be loaded (Default value = None)
+        """
         if url_to_load is None:
             url_to_load = Util.make_url_safe_for_interaction(Util.initial_url)
         else:
@@ -195,11 +214,18 @@ class WebsiteInteractor(Interactor):
         self.driver.quit()
 
     def interact_with_element(self, element):
+        """
+        Interact with an HTML element.
+
+        Args:
+          element: HTML element to be interacted with
+        """
         element.log_interaction_start()
         html_reference = element.get_html_reference(self)
         element.interact(html_reference, self)
 
     def reset_mouse(self):
+        """Reset the mouse to (1 / 1) coordinates."""
         self.driver.execute_script("window.scrollTo(0, 0);")
         action = ActionBuilder(self.driver)
         action.pointer_action.move_to_location(1, 1)
@@ -210,10 +236,25 @@ class WebsiteInteractor(Interactor):
         self.check_mouse_tracker()
 
     def set_current_mouse_pos_to_position(self, pos):
+        """
+        Set the mouse coordinates to specific position.
+
+        Args:
+          pos: Coordinates the mouse should be set to
+        """
         self.current_mouse_pos = pos
         self.check_mouse_tracker()
 
     def get_center_of_element_pos(self, element):
+        """
+        Get the center coordinates of an HTML element.
+
+        Args:
+          element: Element to be evaluated
+
+        Returns:
+            Center coordinates of element
+        """
         rect = self.get_bounding_rect(element)
         pos = dict()
         pos["x"] = rect["left"] + rect["width"] / 2
@@ -221,6 +262,15 @@ class WebsiteInteractor(Interactor):
         return pos
 
     def get_bounding_rect(self, element):
+        """
+        Calculate the bounding rectangle of an HTML element.
+
+        Args:
+          element: Element to be evaluated
+
+        Returns:
+            Bounding rectangle of the element
+        """
         if element.tag_name == "area":
             return self.get_area_bounding_rect(element)
 
@@ -234,12 +284,22 @@ class WebsiteInteractor(Interactor):
         )
 
     def check_mouse_tracker(self):
+        """Log current mouse position."""
         scroll_x = self.driver.execute_script("return window.scrollX;")
         scroll_y = self.driver.execute_script("return window.scrollY;")
         Util.logger.debug(f"scroll x {scroll_x:.2f} / y {scroll_y:.2f}")
         Util.logger.debug(f"mouse tracked at x {self.current_mouse_pos['x']:.2f} / y {self.current_mouse_pos['y']:.2f}")
 
     def get_area_bounding_rect(self, area):
+        """
+        Calculate the bounding rectangle of an <area> HTML element.
+
+        Args:
+          area: <area> Element to be evaluated
+
+        Returns:
+            Bounding rectangle of the <area> element
+        """
         map_element = self.driver.execute_script("""
             let el = arguments[0];
             while (el && el.tagName.toLowerCase() !== 'map') {
@@ -281,9 +341,11 @@ class WebsiteInteractor(Interactor):
         }
 
     def does_mouse_cursor_exist(self):
+        """Check if mouse cursor visualisation element has already been inserted."""
         return self.driver.execute_script("return document.getElementById('selenium-mouse') !== null;")
 
     def show_mouse_cursor(self):
+        """Insert mouse cursor visualisation element."""
         if not Settings.display_cursor:
             return
         if self.does_mouse_cursor_exist():
@@ -312,6 +374,11 @@ class WebsiteInteractor(Interactor):
         Util.logger.debug("made cursor visible")
 
     def log_cookies(self, msg):
+        """
+        Log current cookie values.
+        Args:
+          msg: Additional message to print in header of log.
+        """
         cookies = self.driver.get_cookies()
         Util.logger.debug("Cookies for current domain " + msg)
         for cookie in cookies:

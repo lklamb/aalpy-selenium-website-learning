@@ -13,6 +13,16 @@ from website_learning.WebsiteSUL import WebsiteSUL
 
 # if chrome does not open, make sure that chromedriver.exe can get through the firewall!
 def main(config_path):
+    """
+    Starts the website learning application.
+
+    Args:
+      config_path: Path to the configuration file.
+
+    Returns:
+        learned_model: Mealy machine representation of the learned behaviour of the website.
+        nr_transitions_without_selfloops: Total number of transitions present in the learned model excluding all self-loops.
+    """
     Util.delete_old_results()
     Util.init_logging()
     Util.set_logging_level(logging.ERROR)

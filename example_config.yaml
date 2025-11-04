@@ -3,7 +3,7 @@ learning_type: PASSIVE
 system_source: FROM_BROWSER
 input_enabled_handling: SELF_LOOP
 trace_len: 3
-passive_approach: COMPATIBILITY_FUNC
-store_results: true
+passive_approach: PTA_PREPROCESSING
+store_results: false
 logging_level: INFO
-create_pdfs: true
+create_pdfs: false

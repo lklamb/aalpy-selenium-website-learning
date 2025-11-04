@@ -13,6 +13,7 @@ from website_learning.WebsiteInteractor import WebsiteInteractor
 
 
 class WebsiteSUL(SUL):
+    """Class representing a website system under learning."""
 
     def __init__(self):
         Util.number_of_resets = 0
@@ -34,6 +35,7 @@ class WebsiteSUL(SUL):
         Util.logger.info(SEPARATOR_NEWLINE)
 
     def pre(self):
+        """Functionalities to be executed prior to each walk through the SUL."""
         Util.logger.info(SEPARATOR_NEWLINE)
         Util.number_of_resets += 1
         Util.logger.info("PRE walk " + str(Util.number_of_resets))
@@ -41,9 +43,19 @@ class WebsiteSUL(SUL):
         self.interactor.reset_system()
 
     def post(self):
+        """Functionalities to be executed after each walk through the SUL."""
         Util.logger.info("\nPOST")
 
     def step(self, letter_string):
+        """
+        Adding a single step to the walk through the SUL by processing an input letter.
+
+        Args:
+            letter_string: Input letter to be handled
+
+        Returns:
+            Output after the interaction
+        """
         Util.logger.info("\nSTEP")
         if letter_string is None:
             Util.logger.error("empty input letter")
@@ -92,4 +104,5 @@ class WebsiteSUL(SUL):
         return output
 
     def final_cleanup(self):
+        """Functionalities to be executed after the learning process."""
         self.interactor.final_cleanup()

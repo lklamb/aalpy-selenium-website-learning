@@ -48,6 +48,7 @@ logger = logging.getLogger("logger")
 
 
 def init_logging():
+    """Initialise logger."""
     logger.setLevel(logging.DEBUG)
     console_handler = logging.StreamHandler()
     logger.addHandler(console_handler)
@@ -56,11 +57,17 @@ def init_logging():
 
 
 def set_logging_level(level):
+    """
+    Set the level of logging to be done.
+    Args:
+      level: How detailed the logging should be (DEBUG < INFO < WARNING < ERROR < CRITICAL)
+    """
     for handler in logger.handlers:
         handler.setLevel(level)
 
 
 def end_logging():
+    """End logging."""
     for handler in list(logger.handlers):
         handler.close()
         logger.removeHandler(handler)
@@ -68,23 +75,36 @@ def end_logging():
 
 
 def write_input_alphabet_to_file():
+    """Document the input alphabet in a file."""
     with open(base_dir / PATH_INPUT_ALPHABET, "w") as file:
         for letter in input_alphabet:
             file.write(letter + "\n")
 
 
 def add_scope_boundary_to_file(found_boundary):
+    """
+    Add a new URL at the boundary of the scope to the boundary documentation file.
+    Args:
+      found_boundary: The URL to be saved
+    """
     with open(base_dir / PATH_SCOPE_BOUNDARY, "a") as file:
         file.write(found_boundary + "\n")
 
 
 def write_scope_to_file():
+    """Document the URL scope in a file."""
     with open(base_dir / PATH_SCOPE, "w") as file:
         for url in urls_in_scope:
             file.write(url + "\n")
 
 
 def write_learning_statistics_to_file(learning_stats):
+    """
+    Document the learning statistics in a file.
+
+    Args:
+      learning_stats: Statistics of the learning process
+    """
     with open(base_dir / PATH_LOG, "a") as file:
         file.write(SEPARATOR_NEWLINE)
         file.write('Learning Finished.\n')
@@ -106,6 +126,12 @@ def write_learning_statistics_to_file(learning_stats):
 
 
 def store_results(marker=None):
+    """
+    Copy documentation and result files to permanent storage.
+
+    Args:
+      marker:  Additional string to be used in directory naming (Default value = None)
+    """
     if Settings.create_pdfs:
         if os.name == 'nt':  # WINDOWS
             ret_val = os.system('taskkill /im Acrobat.exe /f')  # close Acrobat process so that pdfs can be copied
@@ -150,6 +176,7 @@ def store_results(marker=None):
 
 
 def delete_old_results():
+    """Delete old documentation and result files from non-permanent storage."""
     folder_path = base_dir / RESULTS_DIRECTORY_NAME / MODEL_DIRECTORY_NAME
     delete_files_in_folder(folder_path)
     folder_path = base_dir / RESULTS_DIRECTORY_NAME
@@ -157,6 +184,11 @@ def delete_old_results():
 
 
 def delete_files_in_folder(folder_path):
+    """
+    Delete all files in the specified folder.
+    Args:
+      folder_path: Folder to be emptied
+    """
     for filename in os.listdir(folder_path):
         if filename == ".gitkeep":
             continue
@@ -166,6 +198,7 @@ def delete_files_in_folder(folder_path):
 
 
 def log_settings():
+    """Log configuration of current learning process."""
     logger.info("SETTINGS")
     logger.info(SEPARATOR_BASIC)
     logger.info("Initial URL: " + Settings.website_to_learn.initial_url)
@@ -204,6 +237,7 @@ def log_settings():
 
 
 def log_time():
+    """Log time stamp."""
     logger.info("\nTIME STAMP")
     logger.info(SEPARATOR_BASIC)
     now = datetime.now()
@@ -212,6 +246,9 @@ def log_time():
 
 
 def log_stats(learned_model, nr_transitions_without_selfloops, gsm_logger=None):
+    """
+    Log additional learning statistics.
+    """
     logger.info("\nSTATS")
     logger.info(SEPARATOR_BASIC)
     logger.info("Total number of system resets: " + str(number_of_resets))
@@ -225,6 +262,15 @@ def log_stats(learned_model, nr_transitions_without_selfloops, gsm_logger=None):
 
 
 def save_and_visualize(learned_model):
+    """
+    Save the learned model in a .dot file. Additionally, it may be visualized in pdf format.
+
+    Args:
+        learned_model: Model to be saved
+
+    Returns:
+        Number of transitions excluding self-loops
+    """
     learned_model.save(base_dir / PATH_LM_ORIG_WITH_SL)
     nr_transitions_without_selfloops = save_model_without_selfloops(base_dir / PATH_LM_ORIG_WITH_SL,
                                                                     base_dir / PATH_LM_ORIG_NO_SL)
@@ -243,6 +289,12 @@ def save_and_visualize(learned_model):
 
 
 def write_input_traces_to_file(input_traces):
+    """
+    Document input traces in a file.
+
+    Args:
+      input_traces: Input traces to be documented
+    """
     with open(base_dir / PATH_INPUT_TRACES, "w") as file:
         counter = 1
         for trace in input_traces:
@@ -255,6 +307,12 @@ def write_input_traces_to_file(input_traces):
 
 
 def write_io_traces_to_file(io_traces):
+    """
+    Document input-output traces in a file.
+
+    Args:
+      io_traces: Input-output traces to be documented
+    """
     with open(base_dir / PATH_IO_TRACES, "a") as file:
         counter = 1
         for trace in io_traces:
@@ -267,6 +325,14 @@ def write_io_traces_to_file(io_traces):
 
 
 def make_url_safe_for_display(url):
+    """
+    Replace '/'s in URL, because it is used internally as a separator.
+    Args:
+      url: URL to be processed
+
+    Returns:
+        URL after processing
+    """
     if Settings.system_source == SystemSource.FROM_BROWSER and url.count(SLASH_REPLACEMENT) > 0:
         logger.error(url + " contains " + SLASH_REPLACEMENT + ", choose a different replacement")
         assert False
@@ -275,10 +341,25 @@ def make_url_safe_for_display(url):
 
 
 def make_url_safe_for_interaction(url):
+    """
+    Revert '/' replacement so that URL can be used for browser interactions again.
+
+    Args:
+        url: URL to be processed
+
+    Returns:
+        URL after processing
+    """
     return url.replace(SLASH_REPLACEMENT, SLASH)
 
 
 def load_config(config_path):
+    """
+    Load configuration from file.
+
+    Args:
+      config_path: Path to configuration file
+    """
     with open(config_path, "r") as file:
         config = yaml.safe_load(file)
     website_to_learn = config["website_to_learn"]

@@ -7,6 +7,7 @@ from website_learning.Interactor import Interactor
 
 
 class AutomatonInteractor(Interactor):
+    """Contains interactions with an automaton loaded from file."""
     def __init__(self):
         super().__init__()
         self.automaton = None

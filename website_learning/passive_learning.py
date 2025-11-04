@@ -19,11 +19,30 @@ from website_learning.TraceGenerator import TraceGenerator
 
 
 def passive_learning(sul):
+    """
+    Executes a passive learning process on a website system.
+
+    Args:
+        sul: System Under Learning, the website to be learned
+
+    Returns:
+        learned_model: Mealy machine representation of the learned behaviour of the website
+        nr_transitions_without_selfloops: Total number of transitions present in the learned model excluding all self-loops
+    """
     # generate data
     trace_generator = TraceGenerator(sul)
     sul.final_cleanup()
 
     def custom_score(part: Dict[GsmNode, GsmNode]):  # the higher the score, the more likely to merge
+        """
+        Custom scoring function that penalizes merges for invalid input nodes that do not result in self-loops.
+        Args:
+          part: Dict[GsmNode: GsmNode]: Partitioning to be scored
+
+        Returns:
+            Score for intended merge
+
+        """
         for old_node in part.keys():
             if len(old_node.transitions) == 0 and (
                 old_node.prefix_access_pair[1] == NOT_ON_CURRENT_PAGE_STR
@@ -39,7 +58,26 @@ def passive_learning(sul):
         return 1
 
     def custom_compatibility(a: GsmNode, b: GsmNode):
+        """
+        Custom compatibility function to keep nodes on different webpages from merging.
+
+        Args:
+          a: GsmNode: First node to be checked
+          b: GsmNode: Second node to be checked
+
+        Returns:
+            True if both nodes are on the same page, false otherwise.
+        """
         def page(x: GsmNode):
+            """
+            Gets the current page of a node.
+
+            Args:
+              x: GsmNode: The node to be evaluated
+
+            Returns:
+                The current page of the node
+            """
             if x.prefix_access_pair[1] is None:
                 assert Util.initial_url is not None
                 return Util.initial_url

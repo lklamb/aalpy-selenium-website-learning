@@ -5,6 +5,7 @@ from website_learning.Constants import (SEPARATOR_BASIC,
 
 
 class TraceGenerator:
+    """Class that contains functionality to create input-output traces from a website system."""
     def __init__(self, sul):
         self.input_traces = []
         self.io_traces = []
@@ -16,6 +17,7 @@ class TraceGenerator:
 
     # exhaustive with filtering, up to trace_len from Settings
     def generate_traces(self):
+        """Generate input-output traces from the SUL up to the trace length specified in the configuration file."""
         valid_prefixes = [[]]  # initialise with prefix length 0
         for length in range(Settings.trace_len):
             Util.logger.info(SEPARATOR_BASIC)
