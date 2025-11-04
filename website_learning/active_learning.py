@@ -1,4 +1,4 @@
-from aalpy import StatePrefixEqOracle, RandomWalkEqOracle, run_Lstar
+from aalpy import RandomWalkEqOracle, StatePrefixEqOracle, run_Lstar
 
 from website_learning import Settings, Util
 from website_learning.Enums import EqOracleType

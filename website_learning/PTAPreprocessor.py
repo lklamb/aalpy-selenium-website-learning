@@ -1,17 +1,11 @@
-from aalpy.learning_algs.general_passive.GsmNode import GsmNode
-from aalpy.learning_algs.general_passive.GsmNode import TransitionInfo
+from aalpy.learning_algs.general_passive.GsmNode import GsmNode, TransitionInfo
 
-import website_learning.Util as Util
 import website_learning.Settings as Settings
-from website_learning.Constants import (
-    NOT_ON_CURRENT_PAGE_STR,
-    BOUNDARY_OF_SCOPE_STR,
-    DEAD_END_STR,
-    RESULTS_DIRECTORY_NAME,
-    GO_SINK_STR,
-    STAY_SINK_STR,
-    outputs_without_page_change,
-)
+import website_learning.Util as Util
+from website_learning.Constants import (BOUNDARY_OF_SCOPE_STR, DEAD_END_STR,
+                                        GO_SINK_STR, NOT_ON_CURRENT_PAGE_STR,
+                                        RESULTS_DIRECTORY_NAME, STAY_SINK_STR,
+                                        outputs_without_page_change)
 from website_learning.Enums import InputEnabledHandling, PassiveApproach
 
 

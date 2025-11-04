@@ -1,10 +1,7 @@
 from typing import List
 
 from aalpy.learning_algs.general_passive.GeneralizedStateMerging import (
-    Instrumentation,
-    GeneralizedStateMerging,
-    Partitioning,
-)
+    GeneralizedStateMerging, Instrumentation, Partitioning)
 from aalpy.learning_algs.general_passive.GsmNode import GsmNode
 
 import website_learning.Util as Util

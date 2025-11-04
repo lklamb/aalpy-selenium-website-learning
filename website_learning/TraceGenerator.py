@@ -1,6 +1,7 @@
 import website_learning.Settings as Settings
 import website_learning.Util as Util
-from website_learning.Constants import SEPARATOR_BASIC, outputs_without_page_change
+from website_learning.Constants import (SEPARATOR_BASIC,
+                                        outputs_without_page_change)
 
 
 class TraceGenerator:

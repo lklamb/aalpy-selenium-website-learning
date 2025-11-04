@@ -1,13 +1,13 @@
+from abc import abstractmethod
+
 from selenium.common import StaleElementReferenceException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
-from abc import abstractmethod
-
+import website_learning.Util as Util
 from website_learning.Constants import DELIMITER_FOR_LETTER
 from website_learning.Enums import ElementType, InteractionType
-import website_learning.Util as Util
 
 
 class InputElement:

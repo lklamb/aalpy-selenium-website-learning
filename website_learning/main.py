@@ -5,10 +5,10 @@ import threading
 
 import website_learning.Settings as Settings
 import website_learning.Util as Util
-from website_learning.WebsiteSUL import WebsiteSUL
-from website_learning.Enums import LearningType, SystemSource
 from website_learning.active_learning import active_learning
+from website_learning.Enums import LearningType, SystemSource
 from website_learning.passive_learning import passive_learning
+from website_learning.WebsiteSUL import WebsiteSUL
 
 
 # if chrome does not open, make sure that chromedriver.exe can get through the firewall!

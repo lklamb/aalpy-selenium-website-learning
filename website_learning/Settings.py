@@ -1,12 +1,9 @@
 import logging
-from website_learning.Enums import (
-    EqOracleType,
-    InputEnabledHandling,
-    LearningType,
-    SystemSource,
-    PassiveApproach,
-)
+
 import website_learning.WebsiteURLs as DemoWebsite
+from website_learning.Enums import (EqOracleType, InputEnabledHandling,
+                                    LearningType, PassiveApproach,
+                                    SystemSource)
 
 # GENERAL SETTINGS
 website_to_learn: DemoWebsite = None

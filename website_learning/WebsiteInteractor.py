@@ -1,31 +1,21 @@
-from selenium.common import (
-    InvalidSelectorException,
-    ElementClickInterceptedException,
-    ElementNotInteractableException,
-)
 from selenium import webdriver
-from selenium.webdriver.common.actions.action_builder import ActionBuilder
-from selenium.webdriver.support.select import Select
+from selenium.common import (ElementClickInterceptedException,
+                             ElementNotInteractableException,
+                             InvalidSelectorException)
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.actions.action_builder import ActionBuilder
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
 
 import website_learning.Settings as Settings
 import website_learning.Util as Util
-from website_learning.Constants import (
-    INTERACTION_INTERCEPTED_STR,
-    NOT_INTERACTABLE_STR,
-    DELIMITER_FOR_LETTER,
-    SLASH,
-)
-from website_learning.Interactor import Interactor
-from website_learning.InputElement import (
-    Clickable,
-    ChangeableSelectOption,
-    InputElement,
-    HoverStart,
-    HoverEnd,
-)
+from website_learning.Constants import (DELIMITER_FOR_LETTER,
+                                        INTERACTION_INTERCEPTED_STR,
+                                        NOT_INTERACTABLE_STR, SLASH)
 from website_learning.Enums import ElementType
+from website_learning.InputElement import (ChangeableSelectOption, Clickable,
+                                           HoverEnd, HoverStart, InputElement)
+from website_learning.Interactor import Interactor
 
 
 class WebsiteInteractor(Interactor):

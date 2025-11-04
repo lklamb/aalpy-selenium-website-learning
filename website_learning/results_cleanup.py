@@ -1,10 +1,9 @@
-from website_learning import Util
-from website_learning.Constants import LEARNED_MODEL_FILE_NAME, NO_SELF_LOOPS_STR
-from website_learning.replacement_strings import (
-    replacement_input_strings,
-    replacement_output_strings,
-)
 from copy import deepcopy
+
+from website_learning.Constants import (LEARNED_MODEL_FILE_NAME,
+                                        NO_SELF_LOOPS_STR)
+from website_learning.replacement_strings import (replacement_input_strings,
+                                                  replacement_output_strings)
 
 
 def cleanup_model(learned_model):

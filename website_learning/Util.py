@@ -1,58 +1,40 @@
+import logging
 import os
 import shutil
 from copy import deepcopy
 from datetime import datetime
-import logging
 from pathlib import Path
 
 import yaml
 
 import website_learning.Settings as Settings
-from website_learning.WebsiteURLs import (
-    CarAlarmWebsite,
-    TestWebsite,
-    RunningExample,
-    HoverExample,
-    MovingElementsExample,
-    OutputExample,
-    WebsiteURLs,
-    TestWebsiteIndex,
-    TestWebsiteBasics,
-    TestWebsiteMapAreas,
-    TestWebsiteDropdowns,
-    TestWebsiteCheckboxes,
-    TestWebsiteSelectionsChoices,
-    TestWebsiteAttributeCombinations,
-    TestWebsiteTabsWindows,
-)
-from website_learning.Constants import (
-    SEPARATOR_NEWLINE,
-    SEPARATOR_BASIC,
-    RESULTS_DIRECTORY_NAME,
-    PATH_LOG,
-    PATH_INPUT_ALPHABET,
-    PATH_SCOPE,
-    PATH_SCOPE_BOUNDARY,
-    MODEL_DIRECTORY_NAME,
-    AUTOMATON_TO_LEARN_FILE_NAME,
-    PATH_INPUT_TRACES,
-    PATH_IO_TRACES,
-    SLASH,
-    PATH_LM_ORIG_WITH_SL,
-    PATH_LM_ORIG_NO_SL,
-    PATH_LM_CLEAN_WITH_SL,
-    PATH_LM_CLEAN_NO_SL,
-    SLASH_REPLACEMENT,
-)
-from website_learning.results_cleanup import save_model_without_selfloops, cleanup_model
-from website_learning.Enums import (
-    EqOracleType,
-    LearningType,
-    SystemSource,
-    DemoWebsite,
-    InputEnabledHandling,
-    PassiveApproach,
-)
+from website_learning.Constants import (AUTOMATON_TO_LEARN_FILE_NAME,
+                                        MODEL_DIRECTORY_NAME,
+                                        PATH_INPUT_ALPHABET, PATH_INPUT_TRACES,
+                                        PATH_IO_TRACES, PATH_LM_CLEAN_NO_SL,
+                                        PATH_LM_CLEAN_WITH_SL,
+                                        PATH_LM_ORIG_NO_SL,
+                                        PATH_LM_ORIG_WITH_SL, PATH_LOG,
+                                        PATH_SCOPE, PATH_SCOPE_BOUNDARY,
+                                        RESULTS_DIRECTORY_NAME,
+                                        SEPARATOR_BASIC, SEPARATOR_NEWLINE,
+                                        SLASH, SLASH_REPLACEMENT)
+from website_learning.Enums import (DemoWebsite, EqOracleType,
+                                    InputEnabledHandling, LearningType,
+                                    PassiveApproach, SystemSource)
+from website_learning.results_cleanup import (cleanup_model,
+                                              save_model_without_selfloops)
+from website_learning.WebsiteURLs import (CarAlarmWebsite, HoverExample,
+                                          MovingElementsExample, OutputExample,
+                                          RunningExample, TestWebsite,
+                                          TestWebsiteAttributeCombinations,
+                                          TestWebsiteBasics,
+                                          TestWebsiteCheckboxes,
+                                          TestWebsiteDropdowns,
+                                          TestWebsiteIndex,
+                                          TestWebsiteMapAreas,
+                                          TestWebsiteSelectionsChoices,
+                                          TestWebsiteTabsWindows, WebsiteURLs)
 
 input_alphabet = []
 initial_url = None

@@ -1,21 +1,18 @@
 from typing import Dict
 
-from aalpy import run_GSM, MealyState
+from aalpy import MealyState, run_GSM
 from aalpy.learning_algs.general_passive.GsmNode import GsmNode
-from aalpy.learning_algs.general_passive.ScoreFunctionsGSM import ScoreCalculation
+from aalpy.learning_algs.general_passive.ScoreFunctionsGSM import \
+    ScoreCalculation
 
-from website_learning import Util, Settings
-from website_learning.Constants import (
-    NOT_ON_CURRENT_PAGE_STR,
-    STAY_SINK_STR,
-    BOUNDARY_OF_SCOPE_STR,
-    DEAD_END_STR,
-    outputs_without_page_change,
-    INTERACTION_INTERCEPTED_STR,
-    NOT_INTERACTABLE_STR,
-    GO_SINK_STR,
-)
-from website_learning.Enums import PassiveApproach, InputEnabledHandling
+from website_learning import Settings, Util
+from website_learning.Constants import (BOUNDARY_OF_SCOPE_STR, DEAD_END_STR,
+                                        GO_SINK_STR,
+                                        INTERACTION_INTERCEPTED_STR,
+                                        NOT_INTERACTABLE_STR,
+                                        NOT_ON_CURRENT_PAGE_STR, STAY_SINK_STR,
+                                        outputs_without_page_change)
+from website_learning.Enums import InputEnabledHandling, PassiveApproach
 from website_learning.GSMLogger import GSMLogger
 from website_learning.PTAPreprocessor import PTAPreprocessor
 from website_learning.TraceGenerator import TraceGenerator
