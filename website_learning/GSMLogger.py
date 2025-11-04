@@ -1,7 +1,10 @@
 from typing import List
 
-from aalpy.learning_algs.general_passive.GeneralizedStateMerging import Instrumentation, GeneralizedStateMerging, \
-    Partitioning
+from aalpy.learning_algs.general_passive.GeneralizedStateMerging import (
+    Instrumentation,
+    GeneralizedStateMerging,
+    Partitioning,
+)
 from aalpy.learning_algs.general_passive.GsmNode import GsmNode
 
 import website_learning.Util as Util
@@ -14,7 +17,7 @@ class GSMLogger(Instrumentation):
         self.log_merge_count = 0
         self.log_promote_count = 0
 
-    def reset(self, gsm: 'GeneralizedStateMerging'):
+    def reset(self, gsm: "GeneralizedStateMerging"):
         Util.logger.debug("reset")
 
     def pta_construction_done(self, root: GsmNode):
@@ -32,4 +35,3 @@ class GSMLogger(Instrumentation):
         Util.logger.info(SEPARATOR_NEWLINE)
         Util.logger.info("Learning finished.")
         Util.logger.info("Number of states: " + str(len(red_states)))
-

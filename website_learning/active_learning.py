@@ -9,17 +9,34 @@ def active_learning(sul):
     eq_oracle = None
     match Settings.equivalence_oracle:
         case EqOracleType.STATE_PREFIX:
-            eq_oracle = StatePrefixEqOracle(Util.input_alphabet, sul, walks_per_state=Settings.walks_per_state,
-                                            walk_len=Settings.walk_len, depth_first=Settings.depth_first)
+            eq_oracle = StatePrefixEqOracle(
+                Util.input_alphabet,
+                sul,
+                walks_per_state=Settings.walks_per_state,
+                walk_len=Settings.walk_len,
+                depth_first=Settings.depth_first,
+            )
         case EqOracleType.RANDOM_WALK:
-            eq_oracle = RandomWalkEqOracle(Util.input_alphabet, sul, num_steps=Settings.num_steps,
-                                           reset_prob=Settings.reset_prob)
+            eq_oracle = RandomWalkEqOracle(
+                Util.input_alphabet,
+                sul,
+                num_steps=Settings.num_steps,
+                reset_prob=Settings.reset_prob,
+            )
 
+    learned_model = None
+    nr_transitions_without_selfloops = 0
     try:
         # run the learning algorithm
-        learned_model, learning_stats = run_Lstar(Util.input_alphabet, sul, eq_oracle, automaton_type='mealy',
-                                                  cache_and_non_det_check=True,
-                                                  print_level=2, return_data=True)
+        learned_model, learning_stats = run_Lstar(
+            Util.input_alphabet,
+            sul,
+            eq_oracle,
+            automaton_type="mealy",
+            cache_and_non_det_check=True,
+            print_level=2,
+            return_data=True,
+        )
 
         # document results
         nr_transitions_without_selfloops = Util.save_and_visualize(learned_model)
@@ -30,4 +47,3 @@ def active_learning(sul):
 
     sul.final_cleanup()
     return learned_model, nr_transitions_without_selfloops
-    

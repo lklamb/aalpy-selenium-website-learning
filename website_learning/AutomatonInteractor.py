@@ -18,7 +18,7 @@ class AutomatonInteractor(Interactor):
                 if line.count("/") > 1:
                     Util.logger.error("In- and/or Outputs contain /s, parsing failed!\n")
                     assert False
-        self.automaton = load_automaton_from_file(Settings.automaton_file_path, 'mealy')
+        self.automaton = load_automaton_from_file(Settings.automaton_file_path, "mealy")
         Util.logger.info("loaded automaton from file")
 
     def reset_system(self):

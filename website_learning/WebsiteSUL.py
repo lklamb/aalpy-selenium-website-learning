@@ -1,8 +1,16 @@
 import website_learning.Util as Util
 import website_learning.Settings as Settings
 from website_learning.AutomatonInteractor import AutomatonInteractor
-from website_learning.Constants import (BOUNDARY_OF_SCOPE_STR, DEAD_END_STR, SEPARATOR_BASIC, SEPARATOR_NEWLINE,
-                                        STAY_SINK_STR, NOT_ON_CURRENT_PAGE_STR, GO_SINK_STR, DELIMITER_FOR_LETTER)
+from website_learning.Constants import (
+    BOUNDARY_OF_SCOPE_STR,
+    DEAD_END_STR,
+    SEPARATOR_BASIC,
+    SEPARATOR_NEWLINE,
+    STAY_SINK_STR,
+    NOT_ON_CURRENT_PAGE_STR,
+    GO_SINK_STR,
+    DELIMITER_FOR_LETTER,
+)
 from website_learning.Enums import SystemSource, InputEnabledHandling
 from website_learning.WebsiteInteractor import WebsiteInteractor
 

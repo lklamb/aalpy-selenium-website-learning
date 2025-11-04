@@ -7,8 +7,15 @@ GO_SINK_STR = "GoSink"
 STAY_SINK_STR = "StaySink"
 INTERACTION_INTERCEPTED_STR = "InteractionIntercepted"
 NOT_INTERACTABLE_STR = "NotInteractable"
-outputs_without_page_change = [NOT_ON_CURRENT_PAGE_STR, BOUNDARY_OF_SCOPE_STR, DEAD_END_STR, GO_SINK_STR, STAY_SINK_STR,
-                               INTERACTION_INTERCEPTED_STR, NOT_INTERACTABLE_STR]
+outputs_without_page_change = [
+    NOT_ON_CURRENT_PAGE_STR,
+    BOUNDARY_OF_SCOPE_STR,
+    DEAD_END_STR,
+    GO_SINK_STR,
+    STAY_SINK_STR,
+    INTERACTION_INTERCEPTED_STR,
+    NOT_INTERACTABLE_STR,
+]
 SEPARATOR_BASIC = "-----------------------------------"
 SEPARATOR_NEWLINE = "-----------------------------------\n"
 DELIMITER_FOR_LETTER = ";"

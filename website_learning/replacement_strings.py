@@ -1,6 +1,5 @@
 replacement_input_strings = {
     # ATTENTION: substrings of other strings should be listed last!
-
     # Test Website
     "https:||lklamb.github.io|Test_Website|index.html": "INDEX",
     "https:||lklamb.github.io|Test_Website|page1.html": "PAGE1",
@@ -31,7 +30,6 @@ replacement_input_strings = {
     "https:||lklamb.github.io|Test_Website|running-example_page3.html": "PAGE3",
     "https:||lklamb.github.io|Test_Website|": "MAIN",
     "https:||example.com|": "EXAMPLE",
-
     # Car Alarm Demo Website (reduced version)
     "https:||lklamb.github.io|CarAlarmSystem_Demo|index.html;ONCLICK;0;front_right_door;CLICK": "NORMAL;front_right_door",
     "https:||lklamb.github.io|CarAlarmSystem_Demo|armed.html;ONCLICK;0;front_right_door;CLICK": "ARMED;front_right_door",
@@ -45,11 +43,10 @@ replacement_input_strings = {
     "https:||lklamb.github.io|CarAlarmSystem_Demo|index.html;HREF;0;Noun Project;CLICK": "NORMAL;noun-project",
     "https:||lklamb.github.io|CarAlarmSystem_Demo|armed.html;HREF;0;Noun Project;CLICK": "ARMED;noun-project",
     "https:||lklamb.github.io|CarAlarmSystem_Demo|alarm.html;HREF;0;Noun Project;CLICK": "ALARM;noun-project",
-    }
+}
 
 replacement_output_strings = {
     # ATTENTION: substrings of other strings should be listed last!
-
     # Test Website
     "https:||lklamb.github.io|Test_Website|index.html": "INDEX",
     "https:||lklamb.github.io|Test_Website|page1.html": "PAGE1",
@@ -80,11 +77,9 @@ replacement_output_strings = {
     "https:||lklamb.github.io|Test_Website|running-example_page3.html": "PAGE3",
     "https:||lklamb.github.io|Test_Website|": "MAIN",
     "https:||example.com|": "EXAMPLE",
-
     # Car Alarm Demo Website
     "https:||lklamb.github.io|CarAlarmSystem_Demo|index.html": "NORMAL",
     "https:||lklamb.github.io|CarAlarmSystem_Demo|armed.html": "ARMED",
     "https:||lklamb.github.io|CarAlarmSystem_Demo|alarm.html": "ALARM",
     "https:||thenounproject.com|browse|collection-icon|auto-parts-5386|?p=1": "NOUN-PROJECT",
-
 }

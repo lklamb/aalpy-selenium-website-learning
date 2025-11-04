@@ -11,14 +11,15 @@ import website_learning.Util as Util
 
 
 class InputElement:
-    element_type_to_xpath = {ElementType.HREF: "//*[@href and not(self::link[contains(@rel, 'stylesheet')])]",
-                             ElementType.ONCLICK: "//*[@onclick]",
-                             ElementType.ONCHANGE: "//*[@onchange]",
-                             ElementType.ONMOUSEENTER: "//*[@onmouseenter]",
-                             ElementType.ONMOUSEOVER: "//*[@onmouseover]",
-                             ElementType.ONMOUSELEAVE: "//*[@onmouseleave]",
-                             ElementType.ONMOUSEOUT: "//*[@onmouseout]"
-                             }
+    element_type_to_xpath = {
+        ElementType.HREF: "//*[@href and not(self::link[contains(@rel, 'stylesheet')])]",
+        ElementType.ONCLICK: "//*[@onclick]",
+        ElementType.ONCHANGE: "//*[@onchange]",
+        ElementType.ONMOUSEENTER: "//*[@onmouseenter]",
+        ElementType.ONMOUSEOVER: "//*[@onmouseover]",
+        ElementType.ONMOUSELEAVE: "//*[@onmouseleave]",
+        ElementType.ONMOUSEOUT: "//*[@onmouseout]",
+    }
 
     def __init__(self, url: str, element_type: ElementType, index, name):
         self.url = url
@@ -32,10 +33,9 @@ class InputElement:
         pass
 
     def log_interaction_start(self):
-        Util.logger.info(
-            "trying to interact with " + str(self.element_type.name) + " element with index " + str(
-                self.index) + " on page " + self.url + ", name: " + str(self.name) + ", interaction: " + str(
-                self.interaction_type.name))
+        Util.logger.info("trying to interact with " + str(self.element_type.name) + " element with index " +
+                         str(self.index) + " on page " + self.url + ", name: " + str(self.name) + ", interaction: " +
+                         str(self.interaction_type.name))
 
     def get_html_reference(self, wi):
         html_references = wi.driver.find_elements(By.XPATH, self.element_type_to_xpath[self.element_type])
@@ -85,7 +85,6 @@ class ChangeableSelectOption(InputElement):
         self.option_index = option_index
         self.option_value = option_value
         super().__init__(url, element_type, index, name)
-
 
     @property
     def interaction_type(self):
@@ -159,7 +158,9 @@ class HoverEnd(InputElement):
         rect = wi.get_bounding_rect(html_reference)
         Util.logger.debug("bounding rect at hover check: ")
         Util.logger.debug(rect)
-        if rect['left'] <= wi.current_mouse_pos['x'] <= rect['right'] and rect['top'] <= wi.current_mouse_pos['y'] <= rect['bottom']:
+        if (rect["left"] <= wi.current_mouse_pos["x"] <= rect["right"]
+            and rect["top"] <= wi.current_mouse_pos["y"] <= rect["bottom"]
+        ):
             return True
         else:
             return False

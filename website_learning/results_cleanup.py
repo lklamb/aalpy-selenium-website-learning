@@ -1,6 +1,9 @@
 from website_learning import Util
 from website_learning.Constants import LEARNED_MODEL_FILE_NAME, NO_SELF_LOOPS_STR
-from website_learning.replacement_strings import replacement_input_strings, replacement_output_strings
+from website_learning.replacement_strings import (
+    replacement_input_strings,
+    replacement_output_strings,
+)
 from copy import deepcopy
 
 
@@ -20,7 +23,6 @@ def cleanup_input(old_dict):
                 new_key = key.replace(old_string, replacement_input_strings[old_string])
                 new_dict[new_key] = value
                 break
-
     return new_dict
 
 

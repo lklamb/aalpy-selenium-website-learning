@@ -8,18 +8,51 @@ from pathlib import Path
 import yaml
 
 import website_learning.Settings as Settings
-from website_learning.WebsiteURLs import (CarAlarmWebsite, TestWebsite, RunningExample, HoverExample,
-                                          MovingElementsExample, OutputExample, WebsiteURLs, TestWebsiteIndex,
-                                          TestWebsiteBasics, TestWebsiteMapAreas, TestWebsiteDropdowns,
-                                          TestWebsiteCheckboxes, TestWebsiteSelectionsChoices,
-                                          TestWebsiteAttributeCombinations, TestWebsiteTabsWindows)
-from website_learning.Constants import SEPARATOR_NEWLINE, SEPARATOR_BASIC, RESULTS_DIRECTORY_NAME, PATH_LOG, \
-    PATH_INPUT_ALPHABET, PATH_SCOPE, PATH_SCOPE_BOUNDARY, MODEL_DIRECTORY_NAME, AUTOMATON_TO_LEARN_FILE_NAME, \
-    PATH_INPUT_TRACES, PATH_IO_TRACES, SLASH, PATH_LM_ORIG_WITH_SL, PATH_LM_ORIG_NO_SL, PATH_LM_CLEAN_WITH_SL, \
-    PATH_LM_CLEAN_NO_SL, SLASH_REPLACEMENT
+from website_learning.WebsiteURLs import (
+    CarAlarmWebsite,
+    TestWebsite,
+    RunningExample,
+    HoverExample,
+    MovingElementsExample,
+    OutputExample,
+    WebsiteURLs,
+    TestWebsiteIndex,
+    TestWebsiteBasics,
+    TestWebsiteMapAreas,
+    TestWebsiteDropdowns,
+    TestWebsiteCheckboxes,
+    TestWebsiteSelectionsChoices,
+    TestWebsiteAttributeCombinations,
+    TestWebsiteTabsWindows,
+)
+from website_learning.Constants import (
+    SEPARATOR_NEWLINE,
+    SEPARATOR_BASIC,
+    RESULTS_DIRECTORY_NAME,
+    PATH_LOG,
+    PATH_INPUT_ALPHABET,
+    PATH_SCOPE,
+    PATH_SCOPE_BOUNDARY,
+    MODEL_DIRECTORY_NAME,
+    AUTOMATON_TO_LEARN_FILE_NAME,
+    PATH_INPUT_TRACES,
+    PATH_IO_TRACES,
+    SLASH,
+    PATH_LM_ORIG_WITH_SL,
+    PATH_LM_ORIG_NO_SL,
+    PATH_LM_CLEAN_WITH_SL,
+    PATH_LM_CLEAN_NO_SL,
+    SLASH_REPLACEMENT,
+)
 from website_learning.results_cleanup import save_model_without_selfloops, cleanup_model
-from website_learning.Enums import (EqOracleType, LearningType, SystemSource, DemoWebsite,
-                                         InputEnabledHandling, PassiveApproach)
+from website_learning.Enums import (
+    EqOracleType,
+    LearningType,
+    SystemSource,
+    DemoWebsite,
+    InputEnabledHandling,
+    PassiveApproach,
+)
 
 input_alphabet = []
 initial_url = None
@@ -121,16 +154,16 @@ def store_results(marker=None):
     shutil.copytree(source_folder, destination_folder)
 
     if Settings.system_source == SystemSource.FROM_AUTOMATON_FILE:
-        with open(Settings.automaton_file_path, 'r') as file:
+        with open(Settings.automaton_file_path, "r") as file:
             lines = file.readlines()
         updated_lines = []
         for line in lines:
-            if line.strip().startswith('digraph '):
-                updated_lines.append('digraph automaton_to_learn {\n')
+            if line.strip().startswith("digraph "):
+                updated_lines.append("digraph automaton_to_learn {\n")
             else:
                 updated_lines.append(line)
         dst_path = os.path.join(destination_folder, AUTOMATON_TO_LEARN_FILE_NAME)
-        with open(dst_path, 'w') as new_file:
+        with open(dst_path, "w") as new_file:
             new_file.writelines(updated_lines)
 
 
@@ -177,11 +210,10 @@ def log_settings():
                     logger.info("  Length of these random walks: " + str(Settings.walk_len))
                     logger.info("  Newest states are explored first (depth first): " + str(Settings.depth_first))
                 case EqOracleType.RANDOM_WALK:
-                    logger.info(
-                        "  Maximum number of random steps that will be performed to find a counter example: " + str(
-                            Settings.num_steps))
-                    logger.info("  Probability that the system will be reset after a step (start new query): " + str(
-                        Settings.reset_prob))
+                    logger.info("  Maximum number of random steps that will be performed to find a counter example: " +
+                                str(Settings.num_steps))
+                    logger.info("  Probability that the system will be reset after a step (start new query): " +
+                                str(Settings.reset_prob))
         case LearningType.PASSIVE:
             logger.info("PASSIVE LEARNING")
             logger.info("  Length of Traces: " + str(Settings.trace_len))
@@ -265,7 +297,7 @@ def make_url_safe_for_interaction(url):
 
 
 def load_config(config_path):
-    with open(config_path, 'r') as file:
+    with open(config_path, "r") as file:
         config = yaml.safe_load(file)
     website_to_learn = config["website_to_learn"]
     if isinstance(website_to_learn, str):

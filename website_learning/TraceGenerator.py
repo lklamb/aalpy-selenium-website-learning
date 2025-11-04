@@ -42,7 +42,8 @@ class TraceGenerator:
                 if invalid_input_count == len(Util.input_alphabet):
                     self.io_traces.append(prefix)
             if len(new_valid_prefixes) == 0:
-                Util.logger.info("Maximum found valid trace length " + str(length) + " is smaller than defined trace length, terminating trace generation")
+                Util.logger.info("Maximum found valid trace length " + str(length) +
+                                 " is smaller than defined trace length, terminating trace generation")
                 break
             valid_prefixes = new_valid_prefixes
         self.io_traces.extend(valid_prefixes)

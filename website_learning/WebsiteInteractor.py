@@ -1,4 +1,8 @@
-from selenium.common import InvalidSelectorException, ElementClickInterceptedException, ElementNotInteractableException
+from selenium.common import (
+    InvalidSelectorException,
+    ElementClickInterceptedException,
+    ElementNotInteractableException,
+)
 from selenium import webdriver
 from selenium.webdriver.common.actions.action_builder import ActionBuilder
 from selenium.webdriver.support.select import Select
@@ -7,9 +11,20 @@ from selenium.webdriver.common.by import By
 
 import website_learning.Settings as Settings
 import website_learning.Util as Util
-from website_learning.Constants import INTERACTION_INTERCEPTED_STR, NOT_INTERACTABLE_STR, DELIMITER_FOR_LETTER, SLASH
+from website_learning.Constants import (
+    INTERACTION_INTERCEPTED_STR,
+    NOT_INTERACTABLE_STR,
+    DELIMITER_FOR_LETTER,
+    SLASH,
+)
 from website_learning.Interactor import Interactor
-from website_learning.InputElement import Clickable, ChangeableSelectOption, InputElement, HoverStart, HoverEnd
+from website_learning.InputElement import (
+    Clickable,
+    ChangeableSelectOption,
+    InputElement,
+    HoverStart,
+    HoverEnd,
+)
 from website_learning.Enums import ElementType
 
 
@@ -42,7 +57,7 @@ class WebsiteInteractor(Interactor):
                                     window.prompt = function() { return null; };
                                     window.open = function(url, name, features) { window.location.href = url; }; 
                                 """
-            }
+            },
         )
         self.preprocess_urls()
         self.generate_input_alphabet()
@@ -66,7 +81,7 @@ class WebsiteInteractor(Interactor):
                     window.prompt = function() { return null; };
                     window.open = function(url, name, features) { window.location.href = url; }; 
                 """
-            }
+            },
         )
         self.driver.implicitly_wait(Settings.wait_time)
 
@@ -123,14 +138,15 @@ class WebsiteInteractor(Interactor):
                 case ElementType.HREF | ElementType.ONCLICK:
                     input_letters.append(Clickable(url, element_type, index, name))
                 case ElementType.ONCHANGE:
-                    if html_reference.tag_name == 'select':
+                    if html_reference.tag_name == "select":
                         for option in Select(html_reference).options:
                             option_value = None
                             try:
-                                option_value = option.get_attribute('value')
+                                option_value = option.get_attribute("value")
                             except:
                                 pass
-                            input_letters.append(ChangeableSelectOption(url, element_type, index, name, option.get_attribute('index'), option_value))
+                            input_letters.append(ChangeableSelectOption(url, element_type, index, name,
+                                                                        option.get_attribute('index'), option_value))
                     else:
                         input_letters.append(Clickable(url, element_type, index, name))
                 case ElementType.ONMOUSEENTER | ElementType.ONMOUSEOVER:
@@ -199,8 +215,8 @@ class WebsiteInteractor(Interactor):
         action.pointer_action.move_to_location(1, 1)
         action.perform()
         Util.logger.debug("reset mouse position")
-        self.current_mouse_pos['x'] = 1.0
-        self.current_mouse_pos['y'] = 1.0
+        self.current_mouse_pos["x"] = 1.0
+        self.current_mouse_pos["y"] = 1.0
         self.check_mouse_tracker()
 
     def set_current_mouse_pos_to_position(self, pos):
@@ -210,19 +226,22 @@ class WebsiteInteractor(Interactor):
     def get_center_of_element_pos(self, element):
         rect = self.get_bounding_rect(element)
         pos = dict()
-        pos['x'] = rect['left'] + rect['width'] / 2
-        pos['y'] = rect['top'] + rect['height'] / 2
+        pos["x"] = rect["left"] + rect["width"] / 2
+        pos["y"] = rect["top"] + rect["height"] / 2
         return pos
 
     def get_bounding_rect(self, element):
-        if element.tag_name == 'area':
+        if element.tag_name == "area":
             return self.get_area_bounding_rect(element)
 
-        return self.driver.execute_script("""
+        return self.driver.execute_script(
+            """
                  const el = arguments[0];
                  const rect = el.getBoundingClientRect();
                  return { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom, width: rect.width, height: rect.height};
-               """, element)
+               """,
+            element,
+        )
 
     def check_mouse_tracker(self):
         scroll_x = self.driver.execute_script("return window.scrollX;")
@@ -280,7 +299,7 @@ class WebsiteInteractor(Interactor):
         if self.does_mouse_cursor_exist():
             return
         # adapted from https://stackoverflow.com/questions/67453285/the-way-to-show-mouse-cursor-using-selenium-in-python
-        cursor_script = '''
+        cursor_script = """
         var cursor = document.createElement('mouse-pointer');
         cursor.id = 'selenium-mouse';
         cursor.style.position = 'absolute';
@@ -298,7 +317,7 @@ class WebsiteInteractor(Interactor):
           cursor.style.left = e.pageX - 5 + 'px';
           cursor.style.top = e.pageY - 5 + 'px';
         });
-        '''
+        """
         self.driver.execute_script(cursor_script)
         Util.logger.debug("made cursor visible")
 
@@ -307,4 +326,3 @@ class WebsiteInteractor(Interactor):
         Util.logger.debug("Cookies for current domain " + msg)
         for cookie in cookies:
             Util.logger.debug(str(cookie["name"]) + ": " + str(cookie["value"]))
-

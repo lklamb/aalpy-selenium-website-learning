@@ -5,11 +5,19 @@ from aalpy.learning_algs.general_passive.GsmNode import GsmNode
 from aalpy.learning_algs.general_passive.ScoreFunctionsGSM import ScoreCalculation
 
 from website_learning import Util, Settings
-from website_learning.Constants import NOT_ON_CURRENT_PAGE_STR, STAY_SINK_STR, BOUNDARY_OF_SCOPE_STR, \
-    DEAD_END_STR, outputs_without_page_change, INTERACTION_INTERCEPTED_STR, NOT_INTERACTABLE_STR, GO_SINK_STR
+from website_learning.Constants import (
+    NOT_ON_CURRENT_PAGE_STR,
+    STAY_SINK_STR,
+    BOUNDARY_OF_SCOPE_STR,
+    DEAD_END_STR,
+    outputs_without_page_change,
+    INTERACTION_INTERCEPTED_STR,
+    NOT_INTERACTABLE_STR,
+    GO_SINK_STR,
+)
 from website_learning.Enums import PassiveApproach, InputEnabledHandling
 from website_learning.GSMLogger import GSMLogger
-from website_learning.PTAPreprocessor import PTAProcessor
+from website_learning.PTAPreprocessor import PTAPreprocessor
 from website_learning.TraceGenerator import TraceGenerator
 
 
@@ -20,13 +28,14 @@ def passive_learning(sul):
 
     def custom_score(part: Dict[GsmNode, GsmNode]):  # the higher the score, the more likely to merge
         for old_node in part.keys():
-            if (len(old_node.transitions) == 0 and
-                    (old_node.prefix_access_pair[1] == NOT_ON_CURRENT_PAGE_STR or
-                     old_node.prefix_access_pair[1] == STAY_SINK_STR or
-                     old_node.prefix_access_pair[1] == INTERACTION_INTERCEPTED_STR or
-                     old_node.prefix_access_pair[1] == NOT_INTERACTABLE_STR or
-                     old_node.prefix_access_pair[1].startswith(BOUNDARY_OF_SCOPE_STR) or
-                     old_node.prefix_access_pair[1].startswith(DEAD_END_STR))):
+            if len(old_node.transitions) == 0 and (
+                old_node.prefix_access_pair[1] == NOT_ON_CURRENT_PAGE_STR
+                or old_node.prefix_access_pair[1] == STAY_SINK_STR
+                or old_node.prefix_access_pair[1] == INTERACTION_INTERCEPTED_STR
+                or old_node.prefix_access_pair[1] == NOT_INTERACTABLE_STR
+                or old_node.prefix_access_pair[1].startswith(BOUNDARY_OF_SCOPE_STR)
+                or old_node.prefix_access_pair[1].startswith(DEAD_END_STR)
+            ):
                 # these nodes should only be merged with their parent -> self loop
                 if part[old_node] != part[old_node.predecessor]:
                     return -1
@@ -55,13 +64,14 @@ def passive_learning(sul):
     gsm_logger = GSMLogger()
 
     # run the learning algorithm
-    learned_model = run_GSM(trace_generator.io_traces,
-                            output_behavior='mealy',
-                            transition_behavior='deterministic',
-                            score_calc=ScoreCalculation(score_function=score_function,
-                                                        local_compatibility=compatibility_function),
-                            pta_preprocessing=PTAProcessor(),
-                            instrumentation=gsm_logger)
+    learned_model = run_GSM(
+        trace_generator.io_traces,
+        output_behavior="mealy",
+        transition_behavior="deterministic",
+        score_calc=ScoreCalculation(score_function=score_function, local_compatibility=compatibility_function),
+        pta_preprocessing=PTAPreprocessor(),
+        instrumentation=gsm_logger,
+    )
 
     if Settings.passive_approach == PassiveApproach.COMPATIBILITY_FUNC:
         # postprocessing
